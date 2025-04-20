@@ -1,0 +1,104 @@
+"""
+配置管理模块 - 负责加载和提供配置信息
+"""
+import os
+import yaml
+import logging
+from dotenv import load_dotenv
+
+class Config:
+    """
+    配置管理类，从环境变量、YAML文件等加载配置。
+    """
+    def __init__(self, config_file_path=None, env_file_path=None):
+        """
+        初始化配置管理器。
+        :param config_file_path: YAML配置文件路径 (可选)
+        :param env_file_path: 环境变量文件路径 (可选, 默认为根目录下的.env)
+        """
+        # 加载环境变量
+        if env_file_path:
+            load_dotenv(env_file_path)
+        else:
+            load_dotenv()  # 默认加载根目录下的.env文件
+            
+        # 优先从YAML文件加载配置
+        self._config_from_yaml = {}
+        if config_file_path and os.path.exists(config_file_path):
+            with open(config_file_path, 'r') as file:
+                try:
+                    self._config_from_yaml = yaml.safe_load(file)
+                except yaml.YAMLError as e:
+                    print(f"Error loading YAML config: {e}")
+        
+        # 数据库配置 - 优先从环境变量读取
+        self.DB_HOST = os.getenv("DB_HOST") or self._get_from_yaml("database.host", "localhost")
+        self.DB_PORT = int(os.getenv("DB_PORT") or self._get_from_yaml("database.port", 5432))
+        self.DB_NAME = os.getenv("DB_NAME") or self._get_from_yaml("database.name", "irrigation_db")
+        self.DB_USER = os.getenv("DB_USER") or self._get_from_yaml("database.user", "postgres")
+        self.DB_PASSWORD = os.getenv("DB_PASSWORD") or self._get_from_yaml("database.password", "postgres")
+        self.DB_TYPE = os.getenv("DB_TYPE") or self._get_from_yaml("database.type", "postgresql")
+        
+        # API密钥
+        self.WEATHER_API_KEY = os.getenv("WEATHER_API_KEY") or self._get_from_yaml("apis.weather_api_key", "")
+        self.API_SERVICE_URL = os.getenv("API_SERVICE_URL") or self._get_from_yaml(
+            "apis.weather_service_url", "https://api.openweathermap.org/data/2.5/weather")
+        
+        # 传感器配置
+        self.SENSOR_IDS = os.getenv("SENSOR_IDS", "").split(",") or self._get_from_yaml("sensors.ids", ["sensor_001", "sensor_002"])
+        self.DATA_COLLECTION_INTERVAL_MINUTES = int(os.getenv("DATA_COLLECTION_INTERVAL") or self._get_from_yaml(
+            "sensors.collection_interval_minutes", 5))
+        
+        # 灌溉策略
+        soil_threshold = os.getenv("SOIL_MOISTURE_THRESHOLD") or self._get_from_yaml("irrigation_strategy.soil_moisture_threshold", 30.0)
+        duration_mins = os.getenv("DEFAULT_IRRIGATION_DURATION") or self._get_from_yaml("irrigation_strategy.default_duration_minutes", 30)
+        
+        self.IRRIGATION_STRATEGY = {
+            "soil_moisture_threshold": float(soil_threshold),
+            "default_duration_minutes": int(duration_mins)
+        }
+        
+        # 模型配置
+        self.MODEL_PATH = os.getenv("MODEL_PATH") or self._get_from_yaml("ml_model.path", None)
+        self.MODEL_INPUT_SIZE = int(os.getenv("MODEL_INPUT_SIZE") or self._get_from_yaml("ml_model.input_size", 6))
+        self.MODEL_HIDDEN_SIZE = int(os.getenv("MODEL_HIDDEN_SIZE") or self._get_from_yaml("ml_model.hidden_size", 50))
+        
+        # 报警配置
+        self.ALARM_THRESHOLD_SOIL_MOISTURE = float(os.getenv("ALARM_THRESHOLD") or self._get_from_yaml(
+            "alarm.soil_moisture_threshold", 25.0))
+        self.ALARM_ENABLED = os.getenv("ALARM_ENABLED", "true").lower() == "true" or self._get_from_yaml("alarm.enabled", True)
+        
+        # 日志配置
+        self.LOG_LEVEL = os.getenv("LOG_LEVEL") or self._get_from_yaml("logging.level", "INFO")
+        self.LOG_FILE = os.getenv("LOG_FILE") or self._get_from_yaml("logging.file", "irrigation_system.log")
+    
+    def _get_from_yaml(self, path, default=None):
+        """
+        从嵌套的YAML配置中提取值
+        :param path: 以点分隔的配置路径 (例如 "database.host")
+        :param default: 如果找不到值，返回的默认值
+        :return: 配置值或默认值
+        """
+        keys = path.split('.')
+        value = self._config_from_yaml
+        for key in keys:
+            if isinstance(value, dict) and key in value:
+                value = value[key]
+            else:
+                return default
+        return value
+    
+    def get_db_uri(self):
+        """
+        返回数据库连接URI字符串
+        """
+        if self.DB_TYPE.lower() == "postgresql":
+            return f"postgresql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        elif self.DB_TYPE.lower() == "mysql":
+            return f"mysql+pymysql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        else:
+            # 默认SQLite
+            return f"sqlite:///irrigation_system.db"
+
+# 全局配置实例 - 单例模式
+config = Config()
