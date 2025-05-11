@@ -6,9 +6,9 @@ import random
 import numpy as np
 from typing import Dict, Any, List, Union, Optional
 
-from src.smart_irrigation.logger_config import logger
-from src.smart_irrigation.config import config
-from src.smart_irrigation.exceptions import ModelLoadError, PredictionError
+from src.logger_config import logger
+from src.config import config
+from src.exceptions import ModelLoadError, PredictionError
 
 # 要使用PyTorch或TensorFlow，取消下面的注释
 # import torch

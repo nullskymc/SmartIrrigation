@@ -3,8 +3,8 @@
 """
 from typing import Optional
 
-from src.smart_irrigation.logger_config import logger
-from src.smart_irrigation.config import config
+from src.logger_config import logger
+from src.config import config
 
 class AlarmModule:
     """

@@ -4,9 +4,9 @@
 import datetime
 from typing import Dict, Any, Optional
 
-from src.smart_irrigation.logger_config import logger
-from src.smart_irrigation.exceptions import IrrigationDeviceError
-from src.smart_irrigation.config import config
+from src.logger_config import logger
+from src.exceptions import IrrigationDeviceError
+from src.config import config
 
 class ControlExecutionModule:
     """

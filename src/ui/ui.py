@@ -4,11 +4,11 @@
 import gradio as gr
 from typing import Dict, Any
 
-from src.smart_irrigation.logger_config import logger
-from src.smart_irrigation.llm_agent import LLMAgentModule
-from src.smart_irrigation.control_execution import ControlExecutionModule
-from src.smart_irrigation.data_processing import DataProcessingModule
-from src.smart_irrigation.data_collection import DataCollectionModule
+from src.logger_config import logger
+from src.llm.llm_agent import LLMAgentModule
+from src.control.control_execution import ControlExecutionModule
+from src.data.data_processing import DataProcessingModule
+from src.data.data_collection import DataCollectionModule
 
 class UserInterfaceModule:
     """
@@ -201,7 +201,7 @@ class UserInterfaceModule:
             with gr.Row():
                 status_btn = gr.Button("查看系统状态")
                 start_btn = gr.Button("启动灌溉")
-                stop_btn = gr.Button("停止灌溉")
+                stop_btn = gr.Button("停止灌溤")
                 predict_btn = gr.Button("预测未来湿度")
             
             # 绑定事件

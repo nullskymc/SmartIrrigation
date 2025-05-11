@@ -3,11 +3,11 @@ LLM智能体模块 - 协调数据、模型、决策和报警
 """
 from typing import Dict, Any, Optional
 
-from src.smart_irrigation.logger_config import logger
-from src.smart_irrigation.exceptions import LLMCommandError
-from src.smart_irrigation.ml_model import SoilMoisturePredictor
-from src.smart_irrigation.alarm import AlarmModule
-from src.smart_irrigation.config import config
+from src.logger_config import logger
+from src.exceptions import LLMCommandError
+from src.ml.ml_model import SoilMoisturePredictor
+from src.alarm.alarm import AlarmModule
+from src.config import config
 
 class LLMAgentModule:
     """

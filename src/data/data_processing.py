@@ -5,9 +5,9 @@ import requests
 import datetime
 from typing import Dict, Any, Optional
 
-from src.smart_irrigation.logger_config import logger
-from src.smart_irrigation.config import config
-from src.smart_irrigation.exceptions import WeatherAPIError, InvalidSensorDataError
+from src.logger_config import logger
+from src.config import config
+from src.exceptions import WeatherAPIError, InvalidSensorDataError
 
 class DataProcessingModule:
     """
@@ -158,7 +158,7 @@ class DataProcessingModule:
         if db is None:
             return None
         
-        from src.smart_irrigation.models import WeatherData
+        from src.database.models import WeatherData
         
         try:
             timestamp = datetime.datetime.fromisoformat(weather_data["timestamp"]) \

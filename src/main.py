@@ -9,16 +9,16 @@ from datetime import datetime
 import argparse
 
 # 导入自定义模块
-from src.smart_irrigation.logger_config import logger
-from src.smart_irrigation.config import config
-from src.smart_irrigation.data_collection import DataCollectionModule
-from src.smart_irrigation.data_processing import DataProcessingModule
-from src.smart_irrigation.ml_model import SoilMoisturePredictor
-from src.smart_irrigation.llm_agent import LLMAgentModule
-from src.smart_irrigation.control_execution import ControlExecutionModule
-from src.smart_irrigation.alarm import AlarmModule
-from src.smart_irrigation.ui import UserInterfaceModule
-from src.smart_irrigation.models import init_db
+from src.logger_config import logger
+from src.config import config
+from src.data.data_collection import DataCollectionModule
+from src.data.data_processing import DataProcessingModule
+from src.ml.ml_model import SoilMoisturePredictor
+from src.llm.llm_agent import LLMAgentModule
+from src.control.control_execution import ControlExecutionModule
+from src.alarm.alarm import AlarmModule
+from src.ui.ui import UserInterfaceModule
+from src.database.models import init_db
 
 def automated_irrigation_check(data_collector, data_processor, llm_agent, control_executor):
     """
@@ -92,7 +92,7 @@ def main():
     
     # 如果指定了配置文件，重新加载配置
     if args.config:
-        from src.smart_irrigation.config import Config
+        from src.config.config import Config
         global config
         config = Config(args.config)
     
