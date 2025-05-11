@@ -46,6 +46,7 @@ class UserInterfaceModule:
             # 解析用户命令
             parsed_command = self.llm_agent.parse_command(user_input)
             action = parsed_command.get("action")
+            logger.info(f"解析到 action: {action}")
             
             if action == "start_irrigation":
                 # 获取当前数据以辅助决策
@@ -163,11 +164,32 @@ class UserInterfaceModule:
                 else:
                     return "错误: 未指定阈值数值。"
             
+            elif action == "langchain_agent":
+                # 优先展示 answer 字段
+                answer = parsed_command.get("answer")
+                if answer:
+                    logger.info(f"langchain_agent answer: {answer}")
+                    return str(answer)
+                # 兜底展示 result
+                result = parsed_command.get("result")
+                if isinstance(result, dict) and "answer" in result:
+                    logger.info(f"langchain_agent result.answer: {result['answer']}")
+                    return str(result["answer"])
+                logger.info(f"langchain_agent result: {result}")
+                return str(result)
+            
             elif action == "unknown":
-                return f"抱歉，我无法理解命令: '{parsed_command.get('original_command', '')}'。\n\n请使用有效的指令，如'启动灌溉'、'停止灌溉'、'查看状态'、'预测湿度'等。"
+                logger.info("action unknown，fallback 到 langchain_agent.run")
+                # fallback 到 langchain_agent.run
+                agent_result = self.llm_agent.run(user_input)
+                logger.info(f"langchain_agent.run 返回: {agent_result}")
+                return str(agent_result)
             
             else:
-                return f"命令 '{action}' 已识别但尚未实现。"
+                logger.info(f"action '{action}' 未实现，fallback 到 langchain_agent.run")
+                agent_result = self.llm_agent.run(user_input)
+                logger.info(f"langchain_agent.run 返回: {agent_result}")
+                return str(agent_result)
                 
         except Exception as e:
             logger.error(f"处理用户输入时发生错误: {e}", exc_info=True)

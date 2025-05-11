@@ -95,11 +95,12 @@ class LLMAgentModule:
     def parse_command(self, command: str):
         """
         兼容UI调用，自动用langchain agent解析自然语言指令。
-        返回格式：{'action': 'tool_name', ...}
+        返回格式：{'action': 'langchain_agent', 'answer': ..., ...}
         """
         try:
             result = run_agent(command)
-            # 可根据实际agent返回内容做结构化处理
-            return {"action": "langchain_agent", "result": result}
+            # 兼容 SeAgent 风格，优先返回 answer 字段
+            answer = result.get("answer") if isinstance(result, dict) else str(result)
+            return {"action": "langchain_agent", "answer": answer, "result": result}
         except Exception as e:
             return {"action": "error", "error": str(e)}
