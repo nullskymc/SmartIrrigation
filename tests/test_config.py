@@ -5,7 +5,7 @@ import os
 import unittest
 import tempfile
 import yaml
-from src.smart_irrigation.config import Config
+from smart_irrigation.config import Config
 
 class TestConfig(unittest.TestCase):
     """测试配置管理模块"""

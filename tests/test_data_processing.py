@@ -5,8 +5,8 @@ import unittest
 from unittest.mock import patch, MagicMock
 import datetime
 import json
-from src.smart_irrigation.data_processing import DataProcessingModule
-from src.smart_irrigation.exceptions import InvalidSensorDataError, WeatherAPIError
+from smart_irrigation.data_processing import DataProcessingModule
+from smart_irrigation.exceptions import InvalidSensorDataError, WeatherAPIError
 
 class TestDataProcessingModule(unittest.TestCase):
     """测试数据处理模块"""

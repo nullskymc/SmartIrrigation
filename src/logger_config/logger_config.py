@@ -3,7 +3,7 @@
 """
 import logging
 import os
-from src.smart_irrigation.config import config
+from config import config
 
 def setup_logger(name="IrrigationSystem"):
     """

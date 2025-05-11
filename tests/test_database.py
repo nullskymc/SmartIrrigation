@@ -5,9 +5,9 @@ import unittest
 from unittest.mock import patch, MagicMock
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from src.smart_irrigation.models import Base, SensorData, WeatherData, IrrigationLog, User
-from src.smart_irrigation.models import create_item, get_item, get_items, update_item, delete_item
-from src.smart_irrigation.exceptions import DatabaseError
+from smart_irrigation.models import Base, SensorData, WeatherData, IrrigationLog, User
+from smart_irrigation.models import create_item, get_item, get_items, update_item, delete_item
+from smart_irrigation.exceptions import DatabaseError
 from datetime import datetime
 
 class TestDatabaseModels(unittest.TestCase):
@@ -155,7 +155,7 @@ class TestDatabaseModels(unittest.TestCase):
     @patch('src.smart_irrigation.models.create_engine')
     def test_init_db_error(self, mock_create_engine):
         """测试数据库初始化错误处理"""
-        from src.smart_irrigation.models import init_db
+        from smart_irrigation.models import init_db
         
         # 模拟创建失败
         mock_create_engine.side_effect = Exception("Test DB initialization error")

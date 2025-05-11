@@ -6,9 +6,9 @@ import random
 import numpy as np
 from typing import Dict, Any, List, Union, Optional
 
-from src.logger_config import logger
-from src.config import config
-from src.exceptions import ModelLoadError, PredictionError
+from logger_config import logger
+from config import config
+from exceptions import ModelLoadError, PredictionError
 
 # 要使用PyTorch或TensorFlow，取消下面的注释
 # import torch

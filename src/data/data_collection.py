@@ -5,9 +5,9 @@ import random
 import datetime
 from typing import List, Dict, Any
 
-from src.logger_config import logger
-from src.config import config
-from src.exceptions import InvalidSensorDataError
+from logger_config import logger
+from config import config
+from exceptions import InvalidSensorDataError
 
 class DataCollectionModule:
     """
@@ -69,7 +69,7 @@ class DataCollectionModule:
         
         # 如果提供了数据库会话，则存储数据
         if db is not None:
-            from src.database.models import SensorData
+            from database.models import SensorData
             timestamp = datetime.datetime.fromisoformat(data["timestamp"])
             sensor_data = SensorData(
                 sensor_id=data["sensor_id"],

@@ -5,8 +5,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, 
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from sqlalchemy.ext.declarative import declared_attr
 from datetime import datetime
-from src.config import config
-from src.exceptions import DatabaseError
+from config import config
+from exceptions import DatabaseError
 
 # 创建基类
 Base = declarative_base()

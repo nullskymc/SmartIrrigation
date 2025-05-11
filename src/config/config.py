@@ -22,22 +22,20 @@ class Config:
         else:
             load_dotenv()  # 默认加载根目录下的.env文件
             
-        # 优先从YAML文件加载配置
+        # 优先加载 config.yaml
+        config_path = config_file_path or os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../config.yaml')
         self._config_from_yaml = {}
-        if config_file_path and os.path.exists(config_file_path):
-            with open(config_file_path, 'r') as file:
-                try:
-                    self._config_from_yaml = yaml.safe_load(file)
-                except yaml.YAMLError as e:
-                    print(f"Error loading YAML config: {e}")
+        if os.path.exists(config_path):
+            with open(config_path, 'r', encoding='utf-8') as f:
+                self._config_from_yaml = yaml.safe_load(f) or {}
         
-        # 数据库配置 - 优先从环境变量读取
-        self.DB_HOST = os.getenv("DB_HOST") or self._get_from_yaml("database.host", "localhost")
-        self.DB_PORT = int(os.getenv("DB_PORT") or self._get_from_yaml("database.port", 5432))
-        self.DB_NAME = os.getenv("DB_NAME") or self._get_from_yaml("database.name", "irrigation_db")
-        self.DB_USER = os.getenv("DB_USER") or self._get_from_yaml("database.user", "postgres")
-        self.DB_PASSWORD = os.getenv("DB_PASSWORD") or self._get_from_yaml("database.password", "postgres")
-        self.DB_TYPE = os.getenv("DB_TYPE") or self._get_from_yaml("database.type", "postgresql")
+        # 数据库配置 - 优先从YAML文件读取
+        self.DB_HOST = self._config_from_yaml.get('database', {}).get('host', os.getenv('DB_HOST', 'localhost'))
+        self.DB_PORT = self._config_from_yaml.get('database', {}).get('port', int(os.getenv('DB_PORT', 5432)))
+        self.DB_NAME = self._config_from_yaml.get('database', {}).get('name', os.getenv('DB_NAME', 'irrigation_db'))
+        self.DB_USER = self._config_from_yaml.get('database', {}).get('user', os.getenv('DB_USER', 'postgres'))
+        self.DB_PASSWORD = self._config_from_yaml.get('database', {}).get('password', os.getenv('DB_PASSWORD', 'postgres'))
+        self.DB_TYPE = self._config_from_yaml.get('database', {}).get('type', os.getenv('DB_TYPE', 'postgresql'))
         
         # API密钥
         self.WEATHER_API_KEY = os.getenv("WEATHER_API_KEY") or self._get_from_yaml("apis.weather_api_key", "")
@@ -71,6 +69,16 @@ class Config:
         # 日志配置
         self.LOG_LEVEL = os.getenv("LOG_LEVEL") or self._get_from_yaml("logging.level", "INFO")
         self.LOG_FILE = os.getenv("LOG_FILE") or self._get_from_yaml("logging.file", "irrigation_system.log")
+        
+        # LLM/OPENAI配置
+        self.OPENAI_API_KEY = (
+            self._config_from_yaml.get('openai_api_key')
+            or os.getenv('OPENAI_API_KEY')
+        )
+        self.OPENAI_BASE_URL = (
+            self._config_from_yaml.get('openai_base_url')
+            or os.getenv('OPENAI_BASE_URL')
+        )
     
     def _get_from_yaml(self, path, default=None):
         """

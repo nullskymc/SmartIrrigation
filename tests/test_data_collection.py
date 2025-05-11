@@ -4,8 +4,8 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from datetime import datetime
-from src.smart_irrigation.data_collection import DataCollectionModule
-from src.smart_irrigation.exceptions import InvalidSensorDataError
+from smart_irrigation.data_collection import DataCollectionModule
+from smart_irrigation.exceptions import InvalidSensorDataError
 
 class TestDataCollectionModule(unittest.TestCase):
     """测试数据采集模块"""

@@ -3,8 +3,8 @@
 """
 from typing import Optional
 
-from src.logger_config import logger
-from src.config import config
+from logger_config import logger
+from config import config
 
 class AlarmModule:
     """

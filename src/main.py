@@ -1,7 +1,10 @@
 """
 主程序入口 - 初始化和启动智能灌溉系统
 """
+import sys
 import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 import threading
 import time
 import schedule
@@ -9,16 +12,16 @@ from datetime import datetime
 import argparse
 
 # 导入自定义模块
-from src.logger_config import logger
-from src.config import config
-from src.data.data_collection import DataCollectionModule
-from src.data.data_processing import DataProcessingModule
-from src.ml.ml_model import SoilMoisturePredictor
-from src.llm.llm_agent import LLMAgentModule
-from src.control.control_execution import ControlExecutionModule
-from src.alarm.alarm import AlarmModule
-from src.ui.ui import UserInterfaceModule
-from src.database.models import init_db
+from logger_config import logger
+from config import config
+from data.data_collection import DataCollectionModule
+from data.data_processing import DataProcessingModule
+from ml.ml_model import SoilMoisturePredictor
+from llm.llm_agent import LLMAgentModule
+from control.control_execution import ControlExecutionModule
+from alarm.alarm import AlarmModule
+from ui.ui import UserInterfaceModule
+from database.models import init_db
 
 def automated_irrigation_check(data_collector, data_processor, llm_agent, control_executor):
     """
@@ -92,12 +95,14 @@ def main():
     
     # 如果指定了配置文件，重新加载配置
     if args.config:
-        from src.config.config import Config
+        from config.config import Config
         global config
         config = Config(args.config)
     
     # 创建必要的目录
-    os.makedirs(os.path.dirname(config.LOG_FILE), exist_ok=True)
+    log_dir = os.path.dirname(config.LOG_FILE)
+    if log_dir:
+        os.makedirs(log_dir, exist_ok=True)
     
     # 初始化数据库（如果指定）
     if args.init_db:
@@ -111,7 +116,7 @@ def main():
     ml_predictor = SoilMoisturePredictor()
     alarm_module = AlarmModule()
     control_executor = ControlExecutionModule()
-    llm_agent = LLMAgentModule(ml_model=ml_predictor, alarm_module=alarm_module)
+    llm_agent = LLMAgentModule(alarm_module=alarm_module)
     ui_module = UserInterfaceModule(llm_agent, control_executor, data_collector, data_processor)
     
     # 2. 设置定时任务

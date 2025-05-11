@@ -4,11 +4,11 @@
 import gradio as gr
 from typing import Dict, Any
 
-from src.logger_config import logger
-from src.llm.llm_agent import LLMAgentModule
-from src.control.control_execution import ControlExecutionModule
-from src.data.data_processing import DataProcessingModule
-from src.data.data_collection import DataCollectionModule
+from logger_config import logger
+from llm.llm_agent import LLMAgentModule
+from control.control_execution import ControlExecutionModule
+from data.data_processing import DataProcessingModule
+from data.data_collection import DataCollectionModule
 
 class UserInterfaceModule:
     """
