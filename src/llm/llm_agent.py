@@ -2,9 +2,9 @@
 LLM智能体模块 - 基于LangChain实现，支持ReAct Agent与sklearn工具
 """
 from typing import Dict, Any, Optional
-from logger_config import logger
-from alarm.alarm import AlarmModule
-from config import config
+from src.logger_config import logger
+from src.alarm.alarm import AlarmModule
+from src.config import config
 from .langchain_agent import run_agent
 
 class LLMAgentModule:

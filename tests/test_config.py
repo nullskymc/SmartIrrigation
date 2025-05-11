@@ -5,7 +5,7 @@ import os
 import unittest
 import tempfile
 import yaml
-from smart_irrigation.config import Config
+from src.config import Config
 
 class TestConfig(unittest.TestCase):
     """测试配置管理模块"""
@@ -70,8 +70,10 @@ class TestConfig(unittest.TestCase):
         
         # 删除环境变量，应该回退到YAML值
         del os.environ["WEATHER_API_KEY"]
+        del os.environ["DB_HOST"]
         config = Config(config_file_path=self.config_file.name)
         self.assertEqual(config.WEATHER_API_KEY, "test-api-key")
+        self.assertEqual(config.DB_HOST, "test-db-host")
         
         # 如果YAML中也没有，应该使用默认值
         test_config = {
@@ -88,10 +90,10 @@ class TestConfig(unittest.TestCase):
     
     def test_get_db_uri(self):
         """测试数据库URI生成"""
+        os.environ["DB_TYPE"] = "postgresql"
         config = Config(config_file_path=self.config_file.name)
         expected_uri = f"postgresql://{config.DB_USER}:{config.DB_PASSWORD}@{config.DB_HOST}:{config.DB_PORT}/{config.DB_NAME}"
         self.assertEqual(config.get_db_uri(), expected_uri)
-        
         # 测试其他数据库类型
         os.environ["DB_TYPE"] = "mysql"
         config = Config(config_file_path=self.config_file.name)

@@ -5,8 +5,8 @@ import random
 import datetime
 from typing import List, Dict, Any
 
-from logger_config import logger
-from config import config
+from src.logger_config import logger
+from src.config import config
 from exceptions import InvalidSensorDataError
 
 class DataCollectionModule:

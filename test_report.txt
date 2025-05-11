@@ -1,0 +1,116 @@
+2025-05-11 19:47:04,817 - IrrigationSystem - INFO - AlarmModule initialized. Threshold: 30%, Enabled: True
+.2025-05-11 19:47:04,818 - IrrigationSystem - INFO - AlarmModule initialized. Threshold: 30%, Enabled: True
+2025-05-11 19:47:04,818 - IrrigationSystem - INFO - 禁用报警系统。
+2025-05-11 19:47:04,818 - IrrigationSystem - INFO - 启用报警系统。
+....EEE/Volumes/app/DevelopProject/SmartIrrigation/tests/test_database.py:129: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  timestamp=datetime.utcnow(),
+/Volumes/app/DevelopProject/SmartIrrigation/.venv/lib/python3.12/site-packages/sqlalchemy/sql/schema.py:3625: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return util.wrap_callable(lambda ctx: fn(), fn)  # type: ignore
+../Volumes/app/DevelopProject/SmartIrrigation/tests/test_database.py:84: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow()
+./Volumes/app/DevelopProject/SmartIrrigation/tests/test_database.py:38: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow()
+../Volumes/app/DevelopProject/SmartIrrigation/tests/test_database.py:62: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow()
+...F/Volumes/app/DevelopProject/SmartIrrigation/src/logger_config/logger_config.py:34: ResourceWarning: unclosed file <_io.TextIOWrapper name='/Volumes/app/DevelopProject/SmartIrrigation/irrigation_system.log' mode='a' encoding='UTF-8'>
+  logger.handlers.clear()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+2025-05-11 19:47:04,848 - TestLogger - INFO - 测试日志消息
+F2025-05-11 19:47:04,849 - IrrigationSystem - INFO - LangChain LLM Agent initialized.
+2025-05-11 19:47:04,849 - IrrigationSystem - INFO - 基于当前湿度: 20% 和预测湿度: None% 做出灌溉决策
+2025-05-11 19:47:04,849 - IrrigationSystem - INFO - 决策: 启动灌溉。原因: 当前湿度 (20%) 低于阈值 (30.0%)。
+.2025-05-11 19:47:04,849 - IrrigationSystem - INFO - LangChain LLM Agent initialized.
+.usage: python3 -m unittest [-h] [--init-db] [--config CONFIG] [--no-ui]
+                           [--share]
+python3 -m unittest: error: unrecognized arguments: discover tests
+.2025-05-11 19:47:06,830 - IrrigationSystem - WARNING - No model path provided, initializing a new model structure.
+2025-05-11 19:47:06,831 - IrrigationSystem - INFO - Initializing new prediction model structure.
+2025-05-11 19:47:06,831 - IrrigationSystem - WARNING - Using dummy prediction model! Replace with actual ML model in production.
+2025-05-11 19:47:06,831 - IrrigationSystem - INFO - Performing prediction...
+2025-05-11 19:47:06,831 - IrrigationSystem - INFO - Predicted future humidity: 38.79543949675552%
+...2025-05-11 19:47:06,863 - IrrigationSystem - INFO - LangChain LLM Agent initialized.
+2025-05-11 19:47:06,863 - IrrigationSystem - INFO - ControlExecutionModule initialized.
+2025-05-11 19:47:06,863 - IrrigationSystem - INFO - DataCollectionModule initialized for sensors: ['sensor_001', 'sensor_002']
+2025-05-11 19:47:06,863 - IrrigationSystem - INFO - DataProcessingModule initialized.
+2025-05-11 19:47:06,863 - IrrigationSystem - INFO - UserInterfaceModule initialized.
+2025-05-11 19:47:06,863 - IrrigationSystem - INFO - 收到用户输入: '预测湿度'
+2025-05-11 19:47:07,920 - IrrigationSystem - INFO - 解析到 action: langchain_agent
+2025-05-11 19:47:07,921 - IrrigationSystem - INFO - langchain_agent answer: 请提供以下信息以便进行预测：
+
+1. 历史湿度数据（例如：时间序列数据）。
+2. 相关的环境变量数据（如温度、降雨量等）。
+3. 需要预测的时间点或范围。
+
+如果有具体的格式要求，请一并说明。
+.
+======================================================================
+ERROR: test_control_execution (unittest.loader._FailedTest.test_control_execution)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_control_execution
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/Volumes/app/DevelopProject/SmartIrrigation/tests/test_control_execution.py", line 2, in <module>
+    from src.control.control_execution import ControlExecutionModule
+  File "/Volumes/app/DevelopProject/SmartIrrigation/src/control/control_execution.py", line 9, in <module>
+    from exceptions import IrrigationDeviceError
+ModuleNotFoundError: No module named 'exceptions'
+
+
+======================================================================
+ERROR: test_data_collection (unittest.loader._FailedTest.test_data_collection)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_data_collection
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/Volumes/app/DevelopProject/SmartIrrigation/tests/test_data_collection.py", line 7, in <module>
+    from data.data_collection import DataCollectionModule
+ModuleNotFoundError: No module named 'data'
+
+
+======================================================================
+ERROR: test_data_processing (unittest.loader._FailedTest.test_data_processing)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_data_processing
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/Volumes/app/DevelopProject/SmartIrrigation/tests/test_data_processing.py", line 8, in <module>
+    from src.data.data_processing import DataProcessingModule
+  File "/Volumes/app/DevelopProject/SmartIrrigation/src/data/data_processing.py", line 10, in <module>
+    from exceptions import WeatherAPIError, InvalidSensorDataError
+ModuleNotFoundError: No module named 'exceptions'
+
+
+======================================================================
+FAIL: test_logger_setup (test_exceptions.TestLogger.test_logger_setup)
+测试日志记录器设置
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Volumes/app/DevelopProject/SmartIrrigation/tests/test_exceptions.py", line 79, in test_logger_setup
+    self.assertEqual(logger.level, logging.DEBUG)
+AssertionError: 20 != 10
+
+======================================================================
+FAIL: test_logger_write (test_exceptions.TestLogger.test_logger_write)
+测试日志写入
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Volumes/app/DevelopProject/SmartIrrigation/tests/test_exceptions.py", line 107, in test_logger_write
+    self.assertIn(test_message, log_content)
+AssertionError: '测试日志消息' not found in ''
+
+----------------------------------------------------------------------
+Ran 25 tests in 3.103s
+
+FAILED (failures=2, errors=3)
