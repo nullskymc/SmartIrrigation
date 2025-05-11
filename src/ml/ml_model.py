@@ -6,8 +6,8 @@ import random
 import numpy as np
 from typing import Dict, Any, List, Union, Optional
 
-from logger_config import logger
-from config import config
+from src.logger_config import logger
+from src.config import config
 from exceptions import ModelLoadError, PredictionError
 
 # 要使用PyTorch或TensorFlow，取消下面的注释
@@ -84,28 +84,10 @@ class SoilMoisturePredictor:
         
         :param model_path: 模型文件路径
         """
-        try:
-            if not os.path.exists(model_path):
-                raise ModelLoadError(f"Model file not found: {model_path}")
-            
-            logger.info(f"Loading pre-trained model from: {model_path}")
-            
-            # PyTorch加载模型示例 (取消注释使用)
-            # self._initialize_model()  # 先创建模型结构
-            # self.model.load_state_dict(torch.load(model_path))
-            # self.model.eval()  # 设置为评估模式
-            
-            # 简易模拟加载
-            logger.warning(f"Mock loading model from {model_path} (replace with actual code)")
-            self._initialize_model()
-            
-            self.is_initialized = True
-            logger.info("Model loaded successfully.")
-            
-        except Exception as e:
-            error_msg = f"Error loading model from {model_path}: {str(e)}"
-            logger.error(error_msg, exc_info=True)
-            raise ModelLoadError(error_msg) from e
+        # 不再抛出异常，直接初始化 DummyModel
+        logger.warning(f"Model file not found or not provided: {model_path}, using DummyModel.")
+        self._initialize_model()
+        self.is_initialized = True
     
     def load_model(self):
         """

@@ -4,9 +4,9 @@
 import datetime
 from typing import Dict, Any, Optional
 
-from logger_config import logger
+from src.logger_config import logger
+from src.config import config
 from exceptions import IrrigationDeviceError
-from config import config
 
 class ControlExecutionModule:
     """

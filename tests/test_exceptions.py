@@ -5,8 +5,8 @@ import unittest
 import logging
 import os
 import tempfile
-from smart_irrigation.exceptions import *
-from smart_irrigation.logger_config import setup_logger
+from src.exceptions import *
+from src.logger_config import setup_logger
 
 class TestExceptions(unittest.TestCase):
     """测试自定义异常类"""

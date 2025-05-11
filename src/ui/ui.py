@@ -4,7 +4,7 @@
 import gradio as gr
 from typing import Dict, Any
 
-from logger_config import logger
+from src.logger_config import logger
 from llm.llm_agent import LLMAgentModule
 from control.control_execution import ControlExecutionModule
 from data.data_processing import DataProcessingModule

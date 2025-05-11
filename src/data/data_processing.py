@@ -5,9 +5,9 @@ import requests
 import datetime
 from typing import Dict, Any, Optional
 
-from logger_config import logger
-from config import config
-from exceptions import WeatherAPIError, InvalidSensorDataError
+from src.logger_config import logger
+from src.config import config
+from src.exceptions.exceptions import WeatherAPIError, InvalidSensorDataError
 
 class DataProcessingModule:
     """
@@ -158,7 +158,7 @@ class DataProcessingModule:
         if db is None:
             return None
         
-        from database.models import WeatherData
+        from src.database.models import WeatherData
         
         try:
             timestamp = datetime.datetime.fromisoformat(weather_data["timestamp"]) \

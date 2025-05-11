@@ -29,13 +29,13 @@ class Config:
             with open(config_path, 'r', encoding='utf-8') as f:
                 self._config_from_yaml = yaml.safe_load(f) or {}
         
-        # 数据库配置 - 优先从YAML文件读取
-        self.DB_HOST = self._config_from_yaml.get('database', {}).get('host', os.getenv('DB_HOST', 'localhost'))
-        self.DB_PORT = self._config_from_yaml.get('database', {}).get('port', int(os.getenv('DB_PORT', 5432)))
-        self.DB_NAME = self._config_from_yaml.get('database', {}).get('name', os.getenv('DB_NAME', 'irrigation_db'))
-        self.DB_USER = self._config_from_yaml.get('database', {}).get('user', os.getenv('DB_USER', 'postgres'))
-        self.DB_PASSWORD = self._config_from_yaml.get('database', {}).get('password', os.getenv('DB_PASSWORD', 'postgres'))
-        self.DB_TYPE = self._config_from_yaml.get('database', {}).get('type', os.getenv('DB_TYPE', 'postgresql'))
+        # 数据库配置 - 优先从环境变量读取
+        self.DB_HOST = os.getenv('DB_HOST') or self._config_from_yaml.get('database', {}).get('host', 'localhost')
+        self.DB_PORT = int(os.getenv('DB_PORT') or self._config_from_yaml.get('database', {}).get('port', 5432))
+        self.DB_NAME = os.getenv('DB_NAME') or self._config_from_yaml.get('database', {}).get('name', 'irrigation_db')
+        self.DB_USER = os.getenv('DB_USER') or self._config_from_yaml.get('database', {}).get('user', 'postgres')
+        self.DB_PASSWORD = os.getenv('DB_PASSWORD') or self._config_from_yaml.get('database', {}).get('password', 'postgres')
+        self.DB_TYPE = os.getenv('DB_TYPE') or self._config_from_yaml.get('database', {}).get('type', 'postgresql')
         
         # API密钥
         self.WEATHER_API_KEY = os.getenv("WEATHER_API_KEY") or self._get_from_yaml("apis.weather_api_key", "")
@@ -43,7 +43,7 @@ class Config:
             "apis.weather_service_url", "https://api.openweathermap.org/data/2.5/weather")
         
         # 传感器配置
-        self.SENSOR_IDS = os.getenv("SENSOR_IDS", "").split(",") or self._get_from_yaml("sensors.ids", ["sensor_001", "sensor_002"])
+        self.SENSOR_IDS = os.getenv("SENSOR_IDS") and os.getenv("SENSOR_IDS").split(",") or self._get_from_yaml("sensors.ids", ["sensor_001", "sensor_002"])
         self.DATA_COLLECTION_INTERVAL_MINUTES = int(os.getenv("DATA_COLLECTION_INTERVAL") or self._get_from_yaml(
             "sensors.collection_interval_minutes", 5))
         
