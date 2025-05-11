@@ -158,7 +158,7 @@ class DataProcessingModule:
         if db is None:
             return None
         
-        from database.models import WeatherData
+        from src.database.models import WeatherData
         
         try:
             timestamp = datetime.datetime.fromisoformat(weather_data["timestamp"]) \

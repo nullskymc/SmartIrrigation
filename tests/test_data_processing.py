@@ -111,7 +111,7 @@ class TestDataProcessingModule(unittest.TestCase):
         self.assertEqual(processed_data["data"]["light_intensity"], 0.0)
         self.assertEqual(processed_data["data"]["rainfall"], 0.0)
     
-    @patch('src.smart_irrigation.data_processing.requests.get')
+    @patch('src.data.data_processing.requests.get')
     def test_get_weather_data_success(self, mock_get):
         """测试成功获取天气数据"""
         # 模拟API响应
@@ -152,7 +152,7 @@ class TestDataProcessingModule(unittest.TestCase):
         self.assertEqual(weather_data["condition"], "晴天")
         self.assertEqual(weather_data["precipitation"], 0.0)
     
-    @patch('src.smart_irrigation.data_processing.requests.get')
+    @patch('src.data.data_processing.requests.get')
     def test_get_weather_data_api_error(self, mock_get):
         """测试天气API错误处理"""
         # 模拟API请求失败
@@ -169,8 +169,8 @@ class TestDataProcessingModule(unittest.TestCase):
         with self.assertRaises(WeatherAPIError):
             module.get_weather_data("Tokyo")
     
-    @patch('src.smart_irrigation.data_processing.DataProcessingModule.process_sensor_data')
-    @patch('src.smart_irrigation.data_processing.DataProcessingModule.get_weather_data')
+    @patch('src.data.data_processing.DataProcessingModule.process_sensor_data')
+    @patch('src.data.data_processing.DataProcessingModule.get_weather_data')
     def test_process_and_get_weather(self, mock_get_weather, mock_process_sensor):
         """测试组合处理流程"""
         # 模拟方法返回值
@@ -196,8 +196,8 @@ class TestDataProcessingModule(unittest.TestCase):
         self.assertEqual(result["sensor_data"]["status"], "processed")
         self.assertEqual(result["weather_data"]["location"], "Tokyo")
     
-    @patch('src.smart_irrigation.data_processing.DataProcessingModule.process_sensor_data')
-    @patch('src.smart_irrigation.data_processing.DataProcessingModule.get_weather_data')
+    @patch('src.data.data_processing.DataProcessingModule.process_sensor_data')
+    @patch('src.data.data_processing.DataProcessingModule.get_weather_data')
     def test_process_and_get_weather_with_errors(self, mock_get_weather, mock_process_sensor):
         """测试组合处理流程中的错误处理"""
         # 模拟传感器数据处理错误
@@ -216,13 +216,10 @@ class TestDataProcessingModule(unittest.TestCase):
         # 验证天气数据为None
         self.assertIsNone(result["weather_data"])
     
-    @patch('src.smart_irrigation.data_processing.DataProcessingModule._store_weather_data')
-    def test_store_weather_data(self, mock_store):
+    @patch('src.database.models.WeatherData')
+    def test_store_weather_data(self, mock_weather_data):
         """测试存储天气数据到数据库"""
-        # 创建模拟DB会话
         mock_db = MagicMock()
-        
-        # 模拟天气数据
         weather_data = {
             "location": "Tokyo",
             "timestamp": datetime.datetime.now().isoformat(),
@@ -232,11 +229,7 @@ class TestDataProcessingModule(unittest.TestCase):
             "condition": "晴天",
             "precipitation": 0.0
         }
-        
-        # 调用存储方法
         self.processing_module._store_weather_data(weather_data, mock_db)
-        
-        # 验证数据库操作
         mock_db.add.assert_called_once()
         mock_db.commit.assert_called_once()
 
