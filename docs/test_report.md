@@ -119,14 +119,14 @@
 
 | 缺陷 ID    | 模块                  | 严重级别 | 描述                                                        | 状态   | 备注                             |
 | --------- | ------------------- | ------ | --------------------------------------------------------- | ---- | ------------------------------ |
-| BUG-106   | `control_execution`  | 高     | 导入异常：使用 `from exceptions` 导入失败，应改为绝对导入 | 未修复 | 覆盖 `test_control_execution` |
-| BUG-107   | `data_collection`    | 高     | 导入异常：使用 `from exceptions` 导入失败，应改为绝对导入 | 未修复 | 覆盖 `test_data_collection`   |
-| BUG-108   | `data_processing`    | 中     | `test_get_weather_data_success` 中接口模拟不匹配源码返回  | 未修复 | 需更新数据处理逻辑或测试用例 |
-| BUG-109   | `data_processing`    | 中     | `test_get_weather_data_no_api_key` 未抛出异常             | 未修复 | 初始化逻辑需处理无API Key场景 |
-| BUG-110   | `logger_config`      | 中     | `test_logger_setup` 与 `test_logger_write` 失败           | 未修复 | `setup_logger`需设置 DEBUG   |
-| BUG-111   | `weather_tools`      | 中     | `test_parse_weather_command` 对非天气命令误识别            | 未修复 | 优化解析逻辑                 |
-| BUG-112   | `weather_langchain`  | 中     | `test_langchain_integration` 输出内容与测试预期不符       | 未修复 | 调整 `_run` 格式或测试用例    |
-| BUG-113   | `main.py`            | 低     | `unittest discover` 参数不被识别，CI 执行失败             | 未修复 | 更新命令行入口或 CI 设置      |
+| BUG-106   | `control_execution`  | 高     | 导入异常：使用 `from exceptions` 导入失败，应改为绝对导入 | 已修复 | 覆盖 `test_control_execution` |
+| BUG-107   | `data_collection`    | 高     | 导入异常：使用 `from exceptions` 导入失败，应改为绝对导入 | 已修复 | 覆盖 `test_data_collection`   |
+| BUG-108   | `data_processing`    | 中     | `test_get_weather_data_success` 中接口模拟不匹配源码返回  | 已修复 | 需更新数据处理逻辑或测试用例 |
+| BUG-109   | `data_processing`    | 中     | `test_get_weather_data_no_api_key` 未抛出异常             | 已修复 | 初始化逻辑需处理无API Key场景 |
+| BUG-110   | `logger_config`      | 中     | `test_logger_setup` 与 `test_logger_write` 失败           | 已修复 | `setup_logger`需设置 DEBUG   |
+| BUG-111   | `weather_tools`      | 中     | `test_parse_weather_command` 对非天气命令误识别            | 已修复 | 优化解析逻辑                 |
+| BUG-112   | `weather_langchain`  | 中     | `test_langchain_integration` 输出内容与测试预期不符       | 已修复 | 调整 `_run` 格式或测试用例    |
+| BUG-113   | `main.py`            | 低     | `unittest discover` 参数不被识别，CI 执行失败             | 已修复 | 更新命令行入口或 CI 设置      |
 
 ### 缺陷运行示例
 
