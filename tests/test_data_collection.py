@@ -4,7 +4,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from datetime import datetime
-from data.data_collection import DataCollectionModule
+from src.data.data_collection import DataCollectionModule
 from exceptions import InvalidSensorDataError
 
 class TestDataCollectionModule(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestDataCollectionModule(unittest.TestCase):
         self.assertEqual(self.collection_module.sensor_ids, self.sensor_ids)
         
         # 测试默认配置
-        with patch('src.data_collection.config') as mock_config:
+        with patch('src.data.data_collection.config') as mock_config:
             mock_config.SENSOR_IDS = ["default-sensor-1"]
             module = DataCollectionModule()
             self.assertEqual(module.sensor_ids, ["default-sensor-1"])
@@ -51,7 +51,7 @@ class TestDataCollectionModule(unittest.TestCase):
         self.assertGreaterEqual(sensor_data["soil_moisture"], 0)
         self.assertLessEqual(sensor_data["soil_moisture"], 100)
     
-    @patch('src.data_collection.random.choice')
+    @patch('src.data.data_collection.random.choice')
     def test_get_data_error(self, mock_choice):
         """测试数据获取错误处理"""
         # 模拟random.choice抛出异常
@@ -61,7 +61,7 @@ class TestDataCollectionModule(unittest.TestCase):
         with self.assertRaises(InvalidSensorDataError):
             self.collection_module.get_data()
     
-    @patch('src.data_collection.DataCollectionModule.get_data')
+    @patch('src.data.data_collection.DataCollectionModule.get_data')
     def test_collect_and_store(self, mock_get_data):
         """测试数据采集和存储"""
         # 模拟get_data的返回值

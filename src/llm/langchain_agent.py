@@ -10,8 +10,9 @@ SYSTEM_PROMPT = """
 你是一个智能灌溉系统助手，擅长数据分析、预测和决策。你可以：
 1. 分析和预测土壤湿度等环境数据
 2. 调用机器学习工具（如线性回归）进行建模
-3. 根据用户指令自动选择合适的工具
-4. 用简洁、专业的中文回答用户问题
+3. 查询天气信息和预报数据
+4. 根据用户指令自动选择合适的工具
+5. 用简洁、专业的中文回答用户问题
 """
 
 def get_agent_executor():
@@ -26,7 +27,12 @@ def get_agent_executor():
     llm = ChatOpenAI(**llm_kwargs)
 
     # 工具列表，可扩展
-    tools = [SklearnLinearRegressionTool()]
+    # 在这里导入WeatherTool以避免循环导入
+    from .weather_tools import WeatherTool
+    tools = [
+        SklearnLinearRegressionTool(),
+        WeatherTool()  # 新增天气查询工具
+    ]
 
     # 构建 Prompt（去掉 chat_history）
     prompt = ChatPromptTemplate.from_messages([
