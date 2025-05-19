@@ -36,6 +36,11 @@ SmartIrrigation 是一个面向现代农业的智能灌溉系统，集成了物�
 
 1. 安装依赖：`pip install -r requirements.txt`
 2. 配置数据库和环境变量（可选 .env 或 config.yaml）
+   - 请勿上传包含敏感信息的 config.yaml 到仓库，参考 `config.template.yaml` 创建你的配置文件。
+   - `config.template.yaml` 支持 `model_name` 字段用于 LangChain 智能体模型选择，例如：
+     ```yaml
+     model_name: gpt-4o  # 可选 gpt-4, gpt-3.5-turbo 等
+     ```
 3. 初始化数据库：`python src/main.py --init-db`
 4. 启动系统：`python src/main.py`
 

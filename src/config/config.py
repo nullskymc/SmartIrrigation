@@ -60,6 +60,8 @@ class Config:
         self.MODEL_PATH = os.getenv("MODEL_PATH") or self._get_from_yaml("ml_model.path", None)
         self.MODEL_INPUT_SIZE = int(os.getenv("MODEL_INPUT_SIZE") or self._get_from_yaml("ml_model.input_size", 6))
         self.MODEL_HIDDEN_SIZE = int(os.getenv("MODEL_HIDDEN_SIZE") or self._get_from_yaml("ml_model.hidden_size", 50))
+        # 新增：模型名称配置
+        self.MODEL_NAME = self._config_from_yaml.get('model_name') or os.getenv('MODEL_NAME') or 'gpt-4o'
         
         # 报警配置
         self.ALARM_THRESHOLD_SOIL_MOISTURE = float(os.getenv("ALARM_THRESHOLD") or self._get_from_yaml(

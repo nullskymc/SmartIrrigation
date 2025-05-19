@@ -21,7 +21,7 @@ def get_agent_executor():
     openai_base_url = getattr(config, 'OPENAI_BASE_URL', None) or os.environ.get("OPENAI_BASE_URL")
     if not openai_api_key:
         raise RuntimeError("请在config.yaml或环境变量中设置 OPENAI_API_KEY，否则无法使用LangChain LLM Agent。")
-    llm_kwargs = {"temperature": 0, "openai_api_key": openai_api_key, "model": "gpt-4o"}
+    llm_kwargs = {"temperature": 0, "openai_api_key": openai_api_key, "model": getattr(config, 'MODEL_NAME', 'gpt-4o')}
     if openai_base_url:
         llm_kwargs["base_url"] = openai_base_url
     llm = ChatOpenAI(**llm_kwargs)
