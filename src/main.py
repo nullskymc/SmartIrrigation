@@ -4,6 +4,12 @@
 import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# 获取当前脚本运行目录
+current_dir = os.getcwd()
+
+# 将当前目录加入到 sys.path
+sys.path.append(current_dir)
+
 
 import threading
 import time

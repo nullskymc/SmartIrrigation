@@ -1,0 +1,42 @@
+# 版本控制
+.git
+.gitignore
+
+# 临时文件和缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.dylib
+.Python
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 虚拟环境
+.env
+.venv
+env/
+venv/
+ENV/
+
+# 测试文件
+tests/
+test_*.py
+
+# 文档和其他非必要文件
+docs/
+README.md
+LICENSE
+test_report.txt
+.DS_Store
+
+# IDE相关
+.idea/
+.vscode/
+*.sublime-*
+
+# 镜像构建过程中会生成的文件
+Dockerfile
+.dockerignore
